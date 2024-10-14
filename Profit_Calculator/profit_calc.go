@@ -6,23 +6,33 @@ import (
 )
 
 func main() {
-	var revenue float64
-	var expenses float64
-	var taxRate float64
 
+	revenue, expenses, taxRate := GetUserInputs()
+	earningBeforeTax, earningAfterTax, ratio := CalculateEarnings(revenue, expenses, taxRate)
+
+	formatedReturnText := fmt.Sprintf(`
+	EBT: %.2f
+	Profit: %.2f
+	Ratio: %v
+	`, earningBeforeTax, earningAfterTax, ratio)
+
+	fmt.Println(formatedReturnText)
+}
+
+func CalculateEarnings(Revenue, Expenses, TaxRate float64) (EBT float64, Profit float64, Ratio float64) {
+	EBT = Revenue - Expenses
+	Profit = EBT * (1 - TaxRate/100)
+	Ratio = EBT / Profit
+	return EBT, Profit, Ratio
+}
+
+func GetUserInputs() (Revenue float64, Expsenses float64, TaxRate float64) {
 	//get user input
 	fmt.Print("enter revenue: ")
-	fmt.Scan(&revenue)
+	fmt.Scan(&Revenue)
 	fmt.Print("enter expenses: ")
-	fmt.Scan(&expenses)
+	fmt.Scan(&Expsenses)
 	fmt.Print("enter taxRate: ")
-	fmt.Scan(&taxRate)
-
-	earningBeforeTax := revenue - expenses
-	earningAfterTax := earningBeforeTax * (1 - taxRate/100)
-	ratio := earningBeforeTax / earningAfterTax
-
-	fmt.Println("EBT:", earningBeforeTax)
-	fmt.Println("Profit:", earningAfterTax)
-	fmt.Println("ratio:", ratio)
+	fmt.Scan(&TaxRate)
+	return
 }
