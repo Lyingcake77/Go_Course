@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"strconv"
@@ -11,7 +12,11 @@ const AccountBalanceFile string = "balance.txt"
 var Balance float64 = 0
 
 func main() {
-	Balance = GetBalanceFromFile()
+	Balance, err := GetBalanceFromFile()
+	if err != nil {
+		fmt.Print(err)
+		//panic("cant continue")
+	}
 	fmt.Println("Welcome to Bank")
 	for {
 		choice := GetUserChoiceInputs()
@@ -68,8 +73,14 @@ func SaveBalanceToFile(Balance float64) {
 	os.WriteFile(AccountBalanceFile, []byte(balanceString), 0644)
 }
 
-func GetBalanceFromFile() {
-	data, _ := os.ReadFile(AccountBalanceFile)
-	returnData, _ = strconv.ParseFloat(string(data), 64)
-	return returnData
+func GetBalanceFromFile() (SavedBalance float64, Error error) {
+	data, err := os.ReadFile(AccountBalanceFile)
+	if err != nil {
+		return 0, errors.New("failed to read file")
+	}
+	SavedBalance, err = strconv.ParseFloat(string(data), 64)
+	if err != nil {
+		return 0, errors.New("failed to parse number to float")
+	}
+	return SavedBalance, nil
 }
