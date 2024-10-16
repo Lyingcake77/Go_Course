@@ -14,3 +14,8 @@ go mod init example.com/first-app</code>
 Create Go executable from module:
 <code>
 go build</code>
+
+pull new package:
+<code>
+go get {url}
+</code>
