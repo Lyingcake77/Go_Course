@@ -10,6 +10,8 @@ type Product struct {
 	price float64
 }
 
+type floatMap map[string]float64
+
 func main() {
 	//1
 	hobbies := [3]string{"thing1", "thing2", "thibng 3"}
@@ -44,6 +46,8 @@ func main() {
 	fmt.Println(append(products, newProduct))
 
 	test()
+	mapStuff()
+	makeingStuff()
 }
 
 func test() {
@@ -72,7 +76,46 @@ func test() {
 	fmt.Println(dynamicArray)
 	//append creates a new array with new memory when creating a larger array than initially set
 	newArray := append(dynamicArray, 5.77)
-	// newArray = append(newArray, []float64{5.77, 123.23, 1234})
+	newArray = append(newArray, 5.77, 33.4)
+	//this can decomstruct the array into indiviidual items
+	newArray = append(newArray, []float64{5.77, 123.23, 1234}...)
 	fmt.Println(newArray)
+
+}
+func mapStuff() {
+	//maps [key] value
+	websites := map[string]string{"google": "google.com", "aws": "aws.com"}
+	fmt.Println(websites)
+	websites["aws"] = "https//aws.com"
+	fmt.Println(websites)
+	websites["Newkey"] = "linkin.com"
+	delete(websites, "google")
+	fmt.Println(websites)
+}
+
+func makeingStuff() {
+	//creates an initial array of length 10, but still lets you use append.
+	//also makes a limit of 100 records
+	usernames := make([]string, 10, 100)
+	usernames[9] = "asd"
+	usernames = append(usernames, "Max")
+	fmt.Println(usernames)
+
+	//preallocating memory for maps
+	courses := make(map[string]float64, 2)
+	courses["go"] = 4.5
+	fmt.Println(courses)
+	//typeAlias
+	courses = make(floatMap, 2)
+	courses["go"] = 4.5
+	courses["react"] = 4.6
+	fmt.Println(courses)
+
+	for index, value := range usernames {
+		fmt.Println(index, value)
+	}
+	for key, value := range courses {
+		fmt.Println(key, value)
+	}
 
 }
