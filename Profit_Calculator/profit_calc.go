@@ -11,7 +11,7 @@ const AccountBalanceFile string = "Earnings.txt"
 
 func main() {
 
-	revenue, expenses, taxRate, err := GetUserInputs()
+	revenue, expenses, taxRate, err  := GetUserInputs()
 	if err != nil {
 		fmt.Println(err)
 		panic("there was an error getting the user inputs ")
